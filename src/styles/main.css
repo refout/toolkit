@@ -1,0 +1,314 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Element Plus 主题色 - 嫩芽绿 */
+:root {
+  --el-color-primary: #67C23A !important;
+  --el-color-primary-light-3: #95d475 !important;
+  --el-color-primary-light-5: #b3e19d !important;
+  --el-color-primary-light-7: #d1edc4 !important;
+  --el-color-primary-light-8: #e1f3d8 !important;
+  --el-color-primary-light-9: #f0f9eb !important;
+  --el-color-primary-dark-2: #529b2e !important;
+}
+
+/* 亮色模式 - GitHub Light 风格 */
+html {
+  --bg-color: #f6f8fa;
+  --text-color: #24292f;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.12);
+  --glass-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --aside-text: #24292f;
+  --menu-active-bg: rgba(103, 194, 58, 0.1);
+  --menu-active-text: #67C23A;
+  --menu-hover-bg: rgba(103, 194, 58, 0.2);
+  --el-color-primary: #67C23A !important;
+  --el-color-primary-light-3: #95d475 !important;
+  --el-color-primary-light-5: #b3e19d !important;
+  --el-color-primary-light-7: #d1edc4 !important;
+  --el-color-primary-light-8: #e1f3d8 !important;
+  --el-color-primary-light-9: #f0f9eb !important;
+  --el-color-primary-dark-2: #529b2e !important;
+}
+
+/* 暗色模式 - GitHub Dark 风格 */
+html.dark {
+  --bg-color: #010409;
+  --text-color: #c9d1d9;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --aside-text: #c9d1d9;
+  --menu-active-bg: rgba(103, 194, 58, 0.15);
+  --menu-active-text: #67C23A;
+  --menu-hover-bg: rgba(103, 194, 58, 0.25);
+  --el-color-primary: #67C23A !important;
+  --el-color-primary-light-3: #95d475 !important;
+  --el-color-primary-light-5: #b3e19d !important;
+  --el-color-primary-light-7: #d1edc4 !important;
+  --el-color-primary-light-8: #e1f3d8 !important;
+  --el-color-primary-light-9: #f0f9eb !important;
+  --el-color-primary-dark-2: #529b2e !important;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.el-container {
+  height: 100%;
+  gap: 12px;
+  padding: 12px;
+}
+
+.el-aside {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  color: var(--aside-text);
+  margin: 0;
+  box-shadow: var(--glass-shadow);
+}
+
+.el-main {
+  background-color: transparent;
+  padding: 0;
+  flex: 1;
+}
+
+.el-menu {
+  border-right: none;
+}
+
+/* 覆盖 Element Plus 菜单选中状态颜色 - 嫩芽绿 */
+.el-menu-item.is-active {
+  background-color: var(--menu-active-bg) !important;
+  color: var(--menu-active-text) !important;
+}
+
+.el-menu-item.is-active .el-icon {
+  color: var(--menu-active-text) !important;
+}
+
+.el-menu-item.is-active::after {
+  display: none !important;
+}
+
+.page-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 6px;
+  padding: 24px;
+  min-height: calc(100vh - 24px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  box-shadow: var(--glass-shadow);
+}
+
+.page-container .description {
+  color: #57606a;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.upload-area {
+  border: 2px dashed var(--glass-border);
+  border-radius: 6px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.upload-area:hover {
+  border-color: #67C23A;
+  background-color: rgba(103, 194, 58, 0.05);
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.image-item {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 6px;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.image-item img {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.image-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.image-item:hover .image-actions {
+  opacity: 1;
+}
+
+
+.el-upload-dragger {
+  padding: 28px;
+  border-radius: 6px;
+  background: var(--glass-bg) !important;
+  border: 2px dashed var(--glass-border) !important;
+  transition: all 0.3s;
+}
+
+.el-upload-dragger:hover {
+  border-color: #67C23A !important;
+  background: var(--glass-bg) !important;
+}
+
+.el-upload--picture-card {
+  background: var(--glass-bg) !important;
+}
+
+.el-icon--upload {
+  font-size: 48px;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.el-upload__text {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.el-upload__tip {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+/* GitHub 风格的链接颜色 */
+a {
+  color: #67C23A;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 强制覆盖 Element Plus 按钮等组件的颜色 */
+.el-button--primary {
+  --el-button-bg-color: #67C23A !important;
+  --el-button-border-color: #67C23A !important;
+  --el-button-hover-bg-color: #95d475 !important;
+  --el-button-hover-border-color: #95d475 !important;
+  --el-button-active-bg-color: #529b2e !important;
+  --el-button-active-border-color: #529b2e !important;
+  background-color: #67C23A !important;
+  border-color: #67C23A !important;
+}
+
+.el-button--primary:hover {
+  background-color: #95d475 !important;
+  border-color: #95d475 !important;
+}
+
+.el-button--primary:active {
+  background-color: #529b2e !important;
+  border-color: #529b2e !important;
+}
+
+.el-switch.is-checked .el-switch__core {
+  background-color: #67C23A !important;
+  border-color: #67C23A !important;
+}
+
+.el-slider__bar {
+  background-color: #67C23A !important;
+}
+
+.el-slider__button {
+  border-color: #67C23A !important;
+}
+
+.el-tag--primary {
+  background-color: rgba(103, 194, 58, 0.1) !important;
+  border-color: rgba(103, 194, 58, 0.2) !important;
+  color: #67C23A !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+  background-color: #67C23A !important;
+  border-color: #67C23A !important;
+}
+
+.el-radio__input.is-checked+.el-radio__label {
+  color: #67C23A !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #67C23A !important;
+  border-color: #67C23A !important;
+}
+
+.el-input__wrapper:focus-within {
+  border-color: #67C23A !important;
+}
+
+.el-select .el-input.is-focus .el-input__wrapper {
+  border-color: #67C23A !important;
+}
+
+.el-select-dropdown__item.is-selected {
+  color: #67C23A !important;
+}
+
+.el-tabs__item.is-active {
+  color: #67C23A !important;
+}
+
+.el-tabs__active-bar {
+  background-color: #67C23A !important;
+}
