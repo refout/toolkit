@@ -97,7 +97,6 @@ import { ref } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
-const uploadRef = ref()
 const originalImage = ref('')
 const convertedImage = ref('')
 const originalSize = ref(0)

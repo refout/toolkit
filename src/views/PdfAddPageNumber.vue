@@ -387,7 +387,7 @@ const addPageNumbers = async () => {
     const pdfBytes = await pdfDoc.save()
     processedPdfBytes.value = pdfBytes
     
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' })
+    const blob = new Blob([pdfBytes.buffer], { type: 'application/pdf' })
     processedPdfUrl.value = URL.createObjectURL(blob)
     
     ElMessage.success('页码添加成功')

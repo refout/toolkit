@@ -78,11 +78,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-
-const uploadRef = ref()
 const canvasRef = ref<HTMLCanvasElement>()
 const imageUrl = ref('')
 const croppedImage = ref('')
