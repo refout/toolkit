@@ -55,7 +55,7 @@ html.dark {
   --aside-text: #c9d1d9;
   --menu-active-bg: rgba(103, 194, 58, 0.15);
   --menu-active-text: #67C23A;
-  --menu-hover-bg: rgba(103, 194, 58, 0.25);
+  --menu-hover-bg: rgba(103, 194, 58, 0.5);
   --el-color-primary: #67C23A !important;
   --el-color-primary-light-3: #95d475 !important;
   --el-color-primary-light-5: #b3e19d !important;
@@ -94,6 +94,7 @@ body {
 
 .el-menu {
   border-right: none;
+  background-color: transparent;
 }
 
 /* 覆盖 Element Plus 菜单选中状态颜色 - 嫩芽绿 */
@@ -116,11 +117,12 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border-radius: 6px;
   padding: 24px;
-  min-height: calc(100vh - 24px);
+  height: calc(100vh - 48px);
   border: 1px solid var(--glass-border);
   color: var(--text-color);
   transition: all 0.3s ease;
   box-shadow: var(--glass-shadow);
+  overflow-y: auto;
 }
 
 .page-container .description {
@@ -311,4 +313,21 @@ a:hover {
 
 .el-tabs__active-bar {
   background-color: #67C23A !important;
+}
+
+/* 暗色模式下的菜单增强样式 */
+html.dark .el-sub-menu__title:hover {
+  background-color: rgba(103, 194, 58, 0.8) !important;
+}
+
+html.dark .el-menu-item:hover {
+  background-color: rgba(103, 194, 58, 0.8) !important;
+}
+
+html.dark .el-sub-menu__title .el-sub-menu__icon-arrow {
+  color: var(--aside-text) !important;
+}
+
+html.dark .el-sub-menu.is-opened>.el-sub-menu__title .el-sub-menu__icon-arrow {
+  color: var(--aside-text) !important;
 }

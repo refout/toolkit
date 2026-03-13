@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -28,11 +28,59 @@ const routes: RouteRecordRaw[] = [
     name: 'ImageToPdf',
     component: () => import('@/views/ImageToPdf.vue'),
     meta: { title: '图片合并PDF' }
+  },
+  {
+    path: '/image-compress',
+    name: 'ImageCompress',
+    component: () => import('@/views/ImageCompress.vue'),
+    meta: { title: '图片压缩' }
+  },
+  {
+    path: '/image-crop',
+    name: 'ImageCrop',
+    component: () => import('@/views/ImageCrop.vue'),
+    meta: { title: '图片剪裁' }
+  },
+  {
+    path: '/image-format',
+    name: 'ImageFormat',
+    component: () => import('@/views/ImageFormat.vue'),
+    meta: { title: '图片格式转换' }
+  },
+  {
+    path: '/image-base64',
+    name: 'ImageBase64',
+    component: () => import('@/views/ImageBase64.vue'),
+    meta: { title: '图片Base64转换' }
+  },
+  {
+    path: '/password-generator',
+    name: 'PasswordGenerator',
+    component: () => import('@/views/PasswordGenerator.vue'),
+    meta: { title: '密码生成器' }
+  },
+  {
+    path: '/pdf-add-page-number',
+    name: 'PdfAddPageNumber',
+    component: () => import('@/views/PdfAddPageNumber.vue'),
+    meta: { title: 'PDF添加页码' }
+  },
+  {
+    path: '/lorem-generator',
+    name: 'LoremGenerator',
+    component: () => import('@/views/LoremGenerator.vue'),
+    meta: { title: '占位文本生成' }
+  },
+  {
+    path: '/regex-tester',
+    name: 'RegexTester',
+    component: () => import('@/views/RegexTester.vue'),
+    meta: { title: '正则表达式测试' }
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory('/toolkit/'),
+  history: createWebHashHistory(),
   routes
 })
 

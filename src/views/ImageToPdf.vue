@@ -269,9 +269,6 @@ const downloadPdf = () => {
 .pdf-preview {
   width: 100%;
   height: 600px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 6px;
   border: 1px solid var(--glass-border);
   margin-top: 12px;

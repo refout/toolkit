@@ -33,7 +33,7 @@
       
       <div class="image-preview">
         <div v-for="(img, index) in images" :key="index" class="image-item">
-          <img :src="img.url" :alt="`Page ${index + 1}`" />
+          <el-image :src="img.url" :preview-src-list="images.map(i => i.url)" :initial-index="index" fit="contain" />
           <div class="image-actions">
             <el-button size="small" type="primary" @click="downloadSingle(img, index)">
               下载
@@ -155,19 +155,20 @@ const downloadAll = async () => {
 
 .image-item {
   position: relative;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 6px;
   border: 1px solid var(--glass-border);
   overflow: hidden;
 }
 
-.image-item img {
+.image-item :deep(.el-image) {
   display: block;
   width: 200px;
   height: 200px;
+}
+
+.image-item :deep(.el-image img) {
   object-fit: contain;
+  cursor: pointer;
 }
 
 .image-actions {

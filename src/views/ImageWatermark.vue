@@ -56,11 +56,11 @@
       <div class="preview-container">
         <div v-if="originalImage" class="preview-item">
           <h4>原图</h4>
-          <img :src="originalImage" alt="原图" />
+          <el-image :src="originalImage" :preview-src-list="[originalImage]" fit="contain" />
         </div>
         <div v-if="watermarkedImage" class="preview-item">
           <h4>水印图</h4>
-          <img :src="watermarkedImage" alt="水印图" />
+          <el-image :src="watermarkedImage" :preview-src-list="[watermarkedImage]" fit="contain" />
           <div class="preview-actions">
             <el-button type="primary" @click="downloadImage">
               <el-icon><Download /></el-icon>
@@ -192,9 +192,6 @@ const downloadImage = () => {
 .watermark-settings {
   margin-top: 24px;
   padding: 20px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 6px;
   border: 1px solid var(--glass-border);
 }
@@ -219,7 +216,14 @@ const downloadImage = () => {
   color: var(--text-color);
 }
 
-.preview-item img {
+.preview-item :deep(.el-image) {
+  max-width: 100%;
+  max-height: 500px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.preview-item :deep(.el-image img) {
   max-width: 100%;
   max-height: 500px;
   border-radius: 6px;
