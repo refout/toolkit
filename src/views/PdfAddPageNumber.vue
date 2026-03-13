@@ -387,7 +387,7 @@ const addPageNumbers = async () => {
     const pdfBytes = await pdfDoc.save()
     processedPdfBytes.value = pdfBytes
     
-    const blob = new Blob([pdfBytes.buffer], { type: 'application/pdf' })
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' })
     processedPdfUrl.value = URL.createObjectURL(blob)
     
     ElMessage.success('页码添加成功')
@@ -432,7 +432,7 @@ const hexToRgb = (hex: string) => {
 const downloadPdf = () => {
   if (!processedPdfBytes.value) return
 
-  const blob = new Blob([processedPdfBytes.value], { type: 'application/pdf' })
+  const blob = new Blob([new Uint8Array(processedPdfBytes.value)], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
