@@ -63,6 +63,9 @@ html.dark {
   --el-color-primary-light-8: #e1f3d8 !important;
   --el-color-primary-light-9: #f0f9eb !important;
   --el-color-primary-dark-2: #529b2e !important;
+  --el-fill-color-light: #0e1116 !important;
+  --el-input-bg-color: #0e1116 !important;
+  --el-fill-color-blank: #0e1116 !important;
 }
 
 body {
@@ -90,6 +93,8 @@ body {
   background-color: transparent;
   padding: 0;
   flex: 1;
+  height: 100%;
+  overflow: hidden;
 }
 
 .el-menu {
@@ -117,7 +122,7 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border-radius: 6px;
   padding: 24px;
-  height: calc(100vh - 48px);
+  height: 100%;
   border: 1px solid var(--glass-border);
   color: var(--text-color);
   transition: all 0.3s ease;

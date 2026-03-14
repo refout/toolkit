@@ -76,6 +76,12 @@ const routes: RouteRecordRaw[] = [
     name: 'RegexTester',
     component: () => import('@/views/RegexTester.vue'),
     meta: { title: '正则表达式测试' }
+  },
+  {
+    path: '/markdown-preview',
+    name: 'MarkdownPreview',
+    component: () => import('@/views/MarkdownPreview.vue'),
+    meta: { title: 'Markdown预览' }
   }
 ]
 

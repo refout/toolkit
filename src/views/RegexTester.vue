@@ -2,25 +2,29 @@
   <div class="page-container">
     <p class="description">正则表达式在线测试工具，支持实时验证、常用正则表达式和学习资料</p>
 
-    <el-tabs v-model="activeTab" type="border-card" class="regex-tabs">
+    <el-tabs v-model="activeTab" class="regex-tabs">
       <!-- 测试区域 -->
       <el-tab-pane label="正则测试" name="test">
         <div class="input-group">
-          <el-input
-            v-model="regexPattern"
-            placeholder="输入正则表达式，例如：\d+"
-            @input="testRegex"
-          >
+          <el-input v-model="regexPattern" placeholder="输入正则表达式，例如：\d+" @input="testRegex">
             <template #prepend>
               <span>/</span>
             </template>
             <template #append>
               <div class="flags-input">
                 <el-checkbox-group v-model="flags" @change="testRegex">
-                  <el-checkbox-button label="g">g</el-checkbox-button>
-                  <el-checkbox-button label="i">i</el-checkbox-button>
-                  <el-checkbox-button label="m">m</el-checkbox-button>
-                  <el-checkbox-button label="s">s</el-checkbox-button>
+                  <el-tooltip content="全局匹配" placement="top">
+                    <el-checkbox-button label="g">g</el-checkbox-button>
+                  </el-tooltip>
+                  <el-tooltip content="忽略大小写" placement="top">
+                    <el-checkbox-button label="i">i</el-checkbox-button>
+                  </el-tooltip>
+                  <el-tooltip content="多行模式" placement="top">
+                    <el-checkbox-button label="m">m</el-checkbox-button>
+                  </el-tooltip>
+                  <el-tooltip content="单行模式" placement="top">
+                    <el-checkbox-button label="s">s</el-checkbox-button>
+                  </el-tooltip>
                 </el-checkbox-group>
               </div>
             </template>
@@ -34,13 +38,7 @@
         </div>
 
         <div class="test-input">
-          <el-input
-            v-model="testString"
-            type="textarea"
-            :rows="6"
-            placeholder="输入测试文本"
-            @input="testRegex"
-          />
+          <el-input v-model="testString" type="textarea" :rows="6" placeholder="输入测试文本" @input="testRegex" />
         </div>
 
         <div class="result-display">
@@ -65,24 +63,17 @@
 
       <!-- 常用正则表达式 -->
       <el-tab-pane label="常用正则" name="patterns">
-        <el-input
-          v-model="searchPattern"
-          placeholder="搜索正则表达式"
-          clearable
-          style="margin-bottom: 16px"
-        >
+        <el-input v-model="searchPattern" placeholder="搜索正则表达式" clearable style="margin-bottom: 16px">
           <template #prefix>
-            <el-icon><Search /></el-icon>
+            <el-icon>
+              <Search />
+            </el-icon>
           </template>
         </el-input>
-        
+
         <div class="patterns-list">
-          <div
-            v-for="pattern in filteredPatterns"
-            :key="pattern.name"
-            class="pattern-item"
-            @click="usePattern(pattern)"
-          >
+          <div v-for="pattern in filteredPatterns" :key="pattern.name" class="pattern-item"
+            @click="usePattern(pattern)">
             <div class="pattern-header">
               <span class="pattern-name">{{ pattern.name }}</span>
               <el-tag size="small">{{ pattern.category }}</el-tag>
@@ -379,13 +370,13 @@ const commonPatterns: Pattern[] = [
   { name: '邮政编码', category: '中国', regex: '^[1-9]\\d{5}$', description: '匹配中国邮政编码' },
   { name: '车牌号', category: '中国', regex: '^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-HJ-NP-Z][A-HJ-NP-Z0-9]{4,5}[A-HJ-NP-Z0-9挂学警港澳]$', description: '匹配中国车牌号' },
   { name: 'QQ号', category: '中国', regex: '^[1-9][0-9]{4,10}$', description: '匹配QQ号码' },
-  
+
   // 互联网
   { name: '邮箱地址', category: '互联网', regex: '^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$', description: '匹配电子邮件地址' },
   { name: '网址', category: '互联网', regex: '^https?://[\\w-]+(\\.[\\w-]+)+[/#?]?.*$', description: '匹配HTTP/HTTPS网址' },
   { name: 'IP地址', category: '互联网', regex: '^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$', description: '匹配IPv4地址' },
   { name: '域名', category: '互联网', regex: '^[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$', description: '匹配域名' },
-  
+
   // 编程相关
   { name: '数字', category: '编程', regex: '^-?\\d+(\\.\\d+)?$', description: '匹配整数和小数' },
   { name: '整数', category: '编程', regex: '^-?\\d+$', description: '匹配整数' },
@@ -393,7 +384,7 @@ const commonPatterns: Pattern[] = [
   { name: '十六进制颜色', category: '编程', regex: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$', description: '匹配十六进制颜色值' },
   { name: '时间格式', category: '编程', regex: '^([01]?\\d|2[0-3]):[0-5]\\d:[0-5]\\d$', description: '匹配HH:MM:SS格式时间' },
   { name: '日期格式', category: '编程', regex: '^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$', description: '匹配YYYY-MM-DD格式日期' },
-  
+
   // 文本处理
   { name: '中文字符', category: '文本', regex: '^[\\u4e00-\\u9fa5]+$', description: '匹配中文字符' },
   { name: '空白行', category: '文本', regex: '^\\s*$', description: '匹配空白行' },
@@ -404,9 +395,9 @@ const commonPatterns: Pattern[] = [
 
 const filteredPatterns = computed(() => {
   if (!searchPattern.value) return commonPatterns
-  
+
   const search = searchPattern.value.toLowerCase()
-  return commonPatterns.filter(p => 
+  return commonPatterns.filter(p =>
     p.name.toLowerCase().includes(search) ||
     p.category.toLowerCase().includes(search) ||
     p.description.toLowerCase().includes(search)
@@ -423,7 +414,7 @@ const testRegex = () => {
   try {
     const flag = flags.value.join('')
     const regex = new RegExp(regexPattern.value, flag)
-    
+
     if (flag.includes('g')) {
       const allMatches = [...testString.value.matchAll(new RegExp(regexPattern.value, flag))]
       matches.value = allMatches
@@ -431,7 +422,7 @@ const testRegex = () => {
       const match = testString.value.match(regex)
       matches.value = match ? [match] : []
     }
-    
+
     regexError.value = ''
   } catch (error: any) {
     regexError.value = error.message
@@ -446,7 +437,7 @@ const highlightedText = computed(() => {
 
   let html = testString.value
   const positions: Array<{ start: number; end: number }> = []
-  
+
   matches.value.forEach(match => {
     if (match.index !== undefined) {
       positions.push({
@@ -458,12 +449,12 @@ const highlightedText = computed(() => {
 
   // 从后向前替换，避免索引偏移
   positions.sort((a, b) => b.start - a.start)
-  
+
   positions.forEach(pos => {
     const matched = html.substring(pos.start, pos.end)
-    html = html.substring(0, pos.start) + 
-           `<mark class="highlight">${matched}</mark>` + 
-           html.substring(pos.end)
+    html = html.substring(0, pos.start) +
+      `<mark class="highlight">${matched}</mark>` +
+      html.substring(pos.end)
   })
 
   return html.replace(/\n/g, '<br>')
@@ -489,15 +480,48 @@ const usePattern = (pattern: Pattern) => {
 
 <style scoped>
 .regex-tabs {
-  height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
+}
+
+.regex-tabs :deep(.el-tabs--border-card) {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.regex-tabs :deep(.el-tabs__header) {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.regex-tabs :deep(.el-tabs__nav-wrap::after) {
+  display: none;
+}
+
+.regex-tabs :deep(.el-tabs__item) {
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--text-color) !important;
+}
+
+.regex-tabs :deep(.el-tabs__item.is-active) {
+  border: none !important;
+  color: #67C23A !important;
+}
+
+.regex-tabs :deep(.el-tabs__item:hover) {
+  color: #67C23A !important;
 }
 
 .regex-tabs :deep(.el-tabs__content) {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.regex-tabs :deep(.el-tab-pane) {
+  background-color: transparent !important;
 }
 
 .input-group {
@@ -520,7 +544,6 @@ const usePattern = (pattern: Pattern) => {
 .result-display {
   border-radius: 6px;
   border: 1px solid var(--glass-border);
-  background: var(--bg-color);
   margin-bottom: 16px;
 }
 
@@ -640,5 +663,13 @@ const usePattern = (pattern: Pattern) => {
   border-radius: 3px;
   font-size: 12px;
   color: #67C23A;
+}
+
+:deep(.el-collapse-item__header) {
+  background-color: transparent !important;
+}
+
+:deep(.el-collapse-item__wrap) {
+  background-color: transparent !important;
 }
 </style>

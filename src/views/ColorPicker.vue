@@ -4,42 +4,42 @@
 
     <div class="color-tool-container">
       <!-- 顶部：颜色选择器 + 预览 + 格式 -->
-      <div class="top-section" >
+      <div class="top-section">
         <div class="picker-area">
           <h3>颜色选择器</h3>
           <el-color-picker v-model="currentColor" @change="handleColorChange" show-alpha size="large" />
         </div>
-       
+
         <div class="formats-area">
           <div class="format-item">
             <label>HEX</label>
-            <el-input v-model="formats.hex" readonly size="small">
+            <el-input v-model="formats.hex" readonly>
               <template #append>
-                <el-button size="small" @click="copyToClipboard(formats.hex)">复制</el-button>
+                <el-button @click="copyToClipboard(formats.hex)">复制</el-button>
               </template>
             </el-input>
           </div>
           <div class="format-item">
             <label>RGB</label>
-            <el-input v-model="formats.rgb" readonly size="small">
+            <el-input v-model="formats.rgb" readonly>
               <template #append>
-                <el-button size="small" @click="copyToClipboard(formats.rgb)">复制</el-button>
+                <el-button @click="copyToClipboard(formats.rgb)">复制</el-button>
               </template>
             </el-input>
           </div>
           <div class="format-item">
             <label>RGBA</label>
-            <el-input v-model="formats.rgba" readonly size="small">
+            <el-input v-model="formats.rgba" readonly>
               <template #append>
-                <el-button size="small" @click="copyToClipboard(formats.rgba)">复制</el-button>
+                <el-button @click="copyToClipboard(formats.rgba)">复制</el-button>
               </template>
             </el-input>
           </div>
           <div class="format-item">
             <label>HSL</label>
-            <el-input v-model="formats.hsl" readonly size="small">
+            <el-input v-model="formats.hsl" readonly>
               <template #append>
-                <el-button size="small" @click="copyToClipboard(formats.hsl)">复制</el-button>
+                <el-button @click="copyToClipboard(formats.hsl)">复制</el-button>
               </template>
             </el-input>
           </div>
@@ -51,12 +51,8 @@
         <!-- 左侧：颜色输入 -->
         <div class="input-section">
           <h3>颜色输入</h3>
-          <el-input
-            v-model="colorInput"
-            placeholder="输入颜色值 (HEX, RGB, RGBA, HSL)"
-            @keyup.enter="parseColorInput"
-            clearable
-          >
+          <el-input v-model="colorInput" placeholder="输入颜色值 (HEX, RGB, RGBA, HSL)" @keyup.enter="parseColorInput"
+            clearable>
             <template #append>
               <el-button @click="parseColorInput">预览</el-button>
             </template>
@@ -72,26 +68,16 @@
           <div class="palette-area">
             <h3>常用颜色</h3>
             <div class="color-palette">
-              <div
-                v-for="color in commonColors"
-                :key="color"
-                class="palette-color"
-                :style="{ backgroundColor: color }"
-                @click="currentColor = color"
-              ></div>
+              <div v-for="color in commonColors" :key="color" class="palette-color" :style="{ backgroundColor: color }"
+                @click="currentColor = color"></div>
             </div>
           </div>
-          
+
           <div class="history-area">
             <h3>历史记录</h3>
             <div class="color-history">
-              <div
-                v-for="(color, index) in colorHistory"
-                :key="index"
-                class="history-color"
-                :style="{ backgroundColor: color }"
-                @click="currentColor = color"
-              ></div>
+              <div v-for="(color, index) in colorHistory" :key="index" class="history-color"
+                :style="{ backgroundColor: color }" @click="currentColor = color"></div>
               <el-empty v-if="colorHistory.length === 0" description="暂无历史记录" :image-size="40" />
             </div>
           </div>
@@ -145,7 +131,7 @@ const rgbToHsl = (r: number, g: number, b: number): { h: number; s: number; l: n
   r /= 255
   g /= 255
   b /= 255
-  
+
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   let h = 0
@@ -155,7 +141,7 @@ const rgbToHsl = (r: number, g: number, b: number): { h: number; s: number; l: n
   if (max !== min) {
     const d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    
+
     switch (max) {
       case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
       case g: h = ((b - r) / d + 2) / 6; break
@@ -179,14 +165,14 @@ const updateFormats = (color: string) => {
       hex = '#' + matches.slice(0, 3).map(x => parseInt(x).toString(16).padStart(2, '0')).join('')
     }
   }
-  
+
   formats.hex = hex.toUpperCase()
-  
+
   const rgb = hexToRgb(hex)
   if (rgb) {
     formats.rgb = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
     formats.rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`
-    
+
     const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b)
     formats.hsl = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
   }
@@ -194,14 +180,14 @@ const updateFormats = (color: string) => {
 
 const parseColorInput = () => {
   const input = colorInput.value.trim()
-  
+
   if (!input) {
     ElMessage.warning('请输入颜色值')
     return
   }
 
   let validColor = ''
-  
+
   // 尝试解析不同格式的颜色
   try {
     // HEX 格式
@@ -232,7 +218,7 @@ const parseColorInput = () => {
         validColor = ctx.fillStyle
       }
     }
-    
+
     if (validColor) {
       inputPreviewColor.value = validColor
       currentColor.value = validColor
@@ -247,7 +233,7 @@ const parseColorInput = () => {
 
 const handleColorChange = (color: string) => {
   updateFormats(color)
-  
+
   if (!colorHistory.value.includes(color)) {
     colorHistory.value.unshift(color)
     if (colorHistory.value.length > 20) {
@@ -299,9 +285,9 @@ watch(currentColor, (newColor) => {
   font-size: 14px;
   color: var(--text-color);
   padding: 4px 8px;
-  border-radius: 4px; 
+  border-radius: 4px;
 }
- 
+
 .formats-area {
   flex: 1;
   display: grid;

@@ -7,33 +7,40 @@
         <h3>密码设置</h3>
         
         <el-form label-width="120px">
-          <el-form-item label="密码长度">
+          <el-form-item label="密码长度" class="length-item">
             <el-slider
               v-model="passwordLength"
               :min="6"
               :max="64"
-              show-input
               :format-tooltip="(val: number) => val + ' 位'"
+            />
+            <el-input-number
+              v-model="passwordLength"
+              :min="6"
+              :max="64"
+              class="length-input"
             />
           </el-form-item>
 
-          <el-form-item label="字符类型">
-            <el-checkbox-group v-model="charTypes">
-              <el-checkbox label="uppercase">大写字母 (A-Z)</el-checkbox>
-              <el-checkbox label="lowercase">小写字母 (a-z)</el-checkbox>
-              <el-checkbox label="numbers">数字 (0-9)</el-checkbox>
-              <el-checkbox label="symbols">特殊符号 (!@#$%^&*)</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
+          <div class="inline-form-items">
+            <el-form-item label="字符类型" class="char-types-item">
+              <el-checkbox-group v-model="charTypes">
+                <el-checkbox label="uppercase">大写字母 (A-Z)</el-checkbox>
+                <el-checkbox label="lowercase">小写字母 (a-z)</el-checkbox>
+                <el-checkbox label="numbers">数字 (0-9)</el-checkbox>
+                <el-checkbox label="symbols">特殊符号 (!@#$%^&*)</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
 
-          <el-form-item label="排除相似字符">
-            <el-switch v-model="excludeSimilar" />
-            <span class="hint">排除 0O1lI 等容易混淆的字符</span>
-          </el-form-item>
+            <el-form-item label="排除相似字符" class="exclude-item">
+              <el-switch v-model="excludeSimilar" />
+              <span class="hint">排除 0O1lI 等容易混淆的字符</span>
+            </el-form-item>
 
-          <el-form-item label="生成数量">
-            <el-input-number v-model="generateCount" :min="1" :max="20" />
-          </el-form-item>
+            <el-form-item label="生成数量" class="count-item">
+              <el-input-number v-model="generateCount" :min="1" :max="20" />
+            </el-form-item>
+          </div>
         </el-form>
 
         <el-button type="primary" size="large" @click="generatePasswords" style="width: 100%;">
@@ -102,7 +109,7 @@ import { ref, computed } from 'vue'
 import { Refresh, CopyDocument, Delete } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
-const passwordLength = ref(16)
+const passwordLength = ref(8)
 const charTypes = ref(['uppercase', 'lowercase', 'numbers', 'symbols'])
 const excludeSimilar = ref(true)
 const generateCount = ref(5)
@@ -246,11 +253,19 @@ const strengthDetails = computed(() => {
 }
 
 .settings-section,
-.result-section,
 .strength-section {
   padding: 20px;
   border-radius: 6px;
   border: 1px solid var(--glass-border);
+}
+
+.result-section {
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--glass-border);
+  max-height: 420px;
+  display: flex;
+  flex-direction: column;
 }
 
 .settings-section h3,
@@ -259,6 +274,52 @@ const strengthDetails = computed(() => {
   margin: 0 0 16px 0;
   font-size: 14px;
   color: var(--text-color);
+}
+
+.inline-form-items {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.char-types-item {
+  flex: 0 0 auto;
+  min-width: auto;
+  max-width: 100%;
+}
+
+.char-types-item :deep(.el-checkbox-group) {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 16px;
+  width: fit-content;
+}
+
+.char-types-item :deep(.el-checkbox) {
+  margin-right: 0 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.exclude-item {
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.count-item {
+  flex-shrink: 0;
+  min-width: 150px;
+}
+
+.length-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.length-item :deep(.el-slider) {
+  flex: 1;
+  min-width: 0;
 }
 
 .hint {
@@ -282,6 +343,8 @@ const strengthDetails = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .password-item {
@@ -341,5 +404,62 @@ const strengthDetails = computed(() => {
 .strength-details {
   font-size: 12px;
   color: #909399;
+}
+
+.length-input {
+  width: 100px;
+  margin-left: 12px;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .length-item {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .length-item :deep(.el-slider) {
+    width: 100% !important;
+  }
+  
+  .length-item :deep(.el-slider__runway) {
+    width: 100% !important;
+  }
+  
+  .length-item :deep(.el-slider__button-wrapper) {
+    display: none !important;
+  }
+  
+  .length-item :deep(.el-slider__input-wrapper) {
+    display: none !important;
+  }
+  
+  .length-input {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 12px;
+  }
+  
+  .inline-form-items {
+    flex-direction: column;
+  }
+  
+  .char-types-item {
+    max-width: 100%;
+  }
+  
+  .char-types-item :deep(.el-checkbox-group) {
+    flex-wrap: wrap !important;
+  }
+  
+  .char-types-item :deep(.el-checkbox) {
+    flex-shrink: 1 !important;
+  }
+  
+  .exclude-item,
+  .count-item {
+    min-width: auto;
+    width: 100%;
+  }
 }
 </style>
