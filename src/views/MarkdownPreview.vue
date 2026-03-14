@@ -80,16 +80,6 @@ const customStyle = ref('')
 
 // 配置 marked
 marked.setOptions({
-  highlight: function(code: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(code, { language: lang }).value
-      } catch {
-        return code
-      }
-    }
-    return hljs.highlightAuto(code).value
-  },
   breaks: true,
   gfm: true
 })
@@ -460,7 +450,7 @@ const exportPDF = async () => {
       filename: 'markdown-export.pdf',
       image: { type: 'jpeg' as const, quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' as const }
     }
     
     await html2pdf().set(opt).from(element).save()
