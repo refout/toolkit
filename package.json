@@ -13,7 +13,7 @@
     "@element-plus/icons-vue": "^2.3.2",
     "@pdf-lib/fontkit": "^1.1.1",
     "@types/dompurify": "^3.0.5",
-    "dompurify": "^3.3.3",
+    "dompurify": "^3.4.1",
     "element-plus": "^2.13.5",
     "file-saver": "^2.0.5",
     "highlight.js": "^11.11.1",
